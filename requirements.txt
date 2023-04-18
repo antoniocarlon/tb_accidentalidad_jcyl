@@ -1,0 +1,2 @@
+tinybird-cli==1.0.0b300
+requests==2.28.2

@@ -1,0 +1,19 @@
+SCHEMA >
+    `year` UInt16,
+    `name` String,
+    `tred` String,
+    `description` String,
+    `long` Float32,
+    `img` Float32,
+    `asv` Float32,
+    `acv` Float32,
+    `dead` Float32,
+    `injuried` Float32,
+    `im` Float32,
+    `ip` Float32,
+    `iat` Float32,
+    `il` Float32,
+    `ig` Float32
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "year,name"

@@ -1,0 +1,19 @@
+NODE accidentalidad_2021
+
+SQL >
+  SELECT name, description, ip
+  FROM accidentalidad
+  WHERE year = 2021
+
+
+NODE accidentalidad_2021_mostdangerous
+
+SQL >
+  with o as (
+    SELECT quantileExact(0.9)(ip) as q
+      FROM accidentalidad_2021
+  )
+  select name, description, ip 
+  from accidentalidad_2021 a, o
+  where ip >= o.q
+  order by ip desc

@@ -1,0 +1,35 @@
+NODE accidentalidad_2020
+
+SQL >
+  SELECT name, description, ip
+  FROM accidentalidad
+  WHERE year = 2020
+
+
+NODE accidentalidad_2021
+
+SQL >
+  SELECT name, description, ip
+  FROM accidentalidad
+  WHERE year = 2021
+
+
+
+NODE accidentalidad_2020_vs_2021
+
+SQL >
+  select a21.name, a21.description, (coalesce(a21.ip, 0) - coalesce(a20.ip, 0)) as ip_increment
+  from accidentalidad_2021 a21 LEFT OUTER JOIN accidentalidad_2020 a20 ON a21.name = a20.name
+
+
+NODE accidentalidad_2020_vs_2021_mostdangerous
+
+SQL >
+  with o as (
+    SELECT quantileExact(0.9)(ip_increment) as q
+      FROM accidentalidad_2020_vs_2021
+  )
+  select name, description, ip_increment 
+  from accidentalidad_2020_vs_2021 a, o
+  where ip_increment >= o.q
+  order by ip_increment desc
